@@ -34,16 +34,6 @@ extends Node
 
 
 
-%%SAVEFILE "test_script.gd"
-extends Node2D
-
-func _ready() -> void:
-	print("Here's where the main code will go.")
-%%END
-
-
-
-
 %%SAVEFILE "test_scene.tscn"
 [gd_scene load_steps=2 format=3 uid="uid://mktqosf47s6q"]
 
