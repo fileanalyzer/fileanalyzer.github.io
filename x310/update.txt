@@ -1,5 +1,5 @@
 project.godot
-GLOBAL/global_variables.gd
+GLOBALS/global_variables.gd
 test_scene.tscn
 test_scene.gd
 %%SPLIT
