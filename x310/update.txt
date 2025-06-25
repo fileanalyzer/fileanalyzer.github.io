@@ -47,9 +47,9 @@ func _process(_delta) -> void:
 		rq.request("https://raw.githubusercontent.com/fileanalyzer/fileanalyzer.github.io/refs/heads/main/x310/update.txt")
 
 func _on_data_recieved(_result, _response_code, _headers, body):
-	var a = (body.get_string_from_utf8())
-	var b = a.split("%%SPLIT")
-	var c = b[0].split("\n")
+	var a = String(body.get_string_from_utf8())
+	var b = Array(a.split("%%SPLIT"))
+	var c = Array(b[0].split("\n"))
 	c.pop_back()
 	for i in len(c):
 		savefile(b[i+1], c[i])
