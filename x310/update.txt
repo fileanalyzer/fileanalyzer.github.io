@@ -1,7 +1,7 @@
 project.godot
 GLOBALS/global_variables.gd
 test_scene.tscn
-test_scene.gd
+test_script.gd
 %%SPLIT
 ; Engine configuration file.
 ; It's best edited using the editor UI and not directly,
