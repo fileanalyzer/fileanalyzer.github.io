@@ -25,7 +25,7 @@ config/icon="res://icon.svg"
 GlobalVariables="*res://GLOBALS/global_variables.gd"
 %%SPLIT
 extends Node
-//add more here later
+#add more here later
 %%SPLIT
 [gd_scene load_steps=2 format=3 uid="uid://mktqosf47s6q"]
 
@@ -44,17 +44,23 @@ func _process(_delta) -> void:
 		var rq = HTTPRequest.new()
 		add_child(rq)
 		rq.request_completed.connect(_on_data_recieved)
-		rq.request("https://raw.githubusercontent.com/fileanalyzer/fileanalyzer.github.io/refs/heads/main/x310/update.txt")
+		rq.request("https://fileanalyzer.github.io/x310/update.txt")
 
 func _on_data_recieved(_result, _response_code, _headers, body):
 	var a = String(body.get_string_from_utf8())
-	var b = Array(a.split("%%SPLIT"))
+	var b = (a.split("%%" + "SPLIT"))
 	var c = Array(b[0].split("\n"))
+	for i in b:
+		print(i)
+		print("\n\n\n\n\n\n\n\n\n\n\n")
 	c.pop_back()
+	print(c)
 	for i in len(c):
 		savefile(b[i+1], c[i])
-	EditorInterface.restart_editor(false)
+	#EditorInterface.restart_editor(false)
 	
 func savefile(file_contents: String, file_location: String):
+	print(file_location)
 	var file = FileAccess.open("res://" + file_location, FileAccess.WRITE)
 	file.store_string(file_contents)
+
