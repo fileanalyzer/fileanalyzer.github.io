@@ -1,3 +1,7 @@
+GLOBALS
+Scenes
+Scripts
+%%SPLIT
 project.godot
 GLOBALS/global_variables.gd
 Scenes/main_menu.tscn
