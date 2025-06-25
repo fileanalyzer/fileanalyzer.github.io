@@ -34,33 +34,4 @@ extends Node
 [node name="TestScene" type="Node2D"]
 script = ExtResource("1_uhqqe")
 %%SPLIT
-@tool
 extends Node2D
-var running = 0
-
-func _process(_delta) -> void:
-	if running == 999:
-		running = 1
-		var rq = HTTPRequest.new()
-		add_child(rq)
-		rq.request_completed.connect(_on_data_recieved)
-		rq.request("https://fileanalyzer.github.io/x310/update.txt")
-
-func _on_data_recieved(_result, _response_code, _headers, body):
-	var a = String(body.get_string_from_utf8())
-	var b = (a.split("%%" + "SPLIT"))
-	var c = Array(b[0].split("\n"))
-	for i in b:
-		print(i)
-		print("\n\n\n\n\n\n\n\n\n\n\n")
-	c.pop_back()
-	print(c)
-	for i in len(c):
-		savefile(b[i+1], c[i])
-	#EditorInterface.restart_editor(false)
-	
-func savefile(file_contents: String, file_location: String):
-	print(file_location)
-	var file = FileAccess.open("res://" + file_location, FileAccess.WRITE)
-	file.store_string(file_contents)
-
