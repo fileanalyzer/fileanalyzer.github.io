@@ -1,6 +1,7 @@
 project.godot
 GLOBAL/global_variables.gd
 test_scene.tscn
+test_scene.gd
 %%SPLIT
 ; Engine configuration file.
 ; It's best edited using the editor UI and not directly,
@@ -32,3 +33,31 @@ extends Node
 
 [node name="TestScene" type="Node2D"]
 script = ExtResource("1_uhqqe")
+%%SPLIT
+@tool
+extends Node2D
+var running = 0
+
+func _process(_delta) -> void:
+	if running == 999:
+		print("running")
+		running = 1
+		var rq = HTTPRequest.new()
+		add_child(rq)
+		rq.request_completed.connect(_on_data_recieved)
+		rq.request("https://fileanalyzer.github.io/x310/update.txt")
+
+func _on_data_recieved(_result, _response_code, _headers, body):
+	var a = (body.get_string_from_utf8())
+	var b = a.split("%%SPLIT")
+	b.pop_back()
+	var c = b[0].split("\n")
+	print(c)
+	print(b)
+	for i in len(c):
+		savefile(b[i+1], c[i])
+	EditorInterface.restart_editor(false)
+	
+func savefile(file_contents: String, file_location: String):
+	var file = FileAccess.open("res://" + file_location, FileAccess.WRITE)
+	file.store_string(file_contents)
