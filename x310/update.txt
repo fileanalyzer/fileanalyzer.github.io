@@ -1,5 +1,5 @@
 project.godot
-GLOBALS/globalvariables.gd
+GLOBALS/global_variables.gd
 Scenes/main_menu.tscn
 Scenes/world2.tscn
 Scenes/player.tscn
