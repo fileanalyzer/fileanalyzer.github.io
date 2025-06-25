@@ -1,4 +1,7 @@
-%%SAVEFILE "project.godot"
+project.godot
+GLOBAL/global_variables.gd
+test_scene.tscn
+%%SPLIT
 ; Engine configuration file.
 ; It's best edited using the editor UI and not directly,
 ; since the parameters that go here are not all obvious.
@@ -19,26 +22,13 @@ config/icon="res://icon.svg"
 [autoload]
 
 GlobalVariables="*res://GLOBALS/global_variables.gd"
-%%END
-
-
-
-
-
-%%SAVEFILE "GLOBAL/global_variables.gd"
+%%SPLIT
 extends Node
 //add more here later
-%%END
-
-
-
-
-
-%%SAVEFILE "test_scene.tscn"
+%%SPLIT
 [gd_scene load_steps=2 format=3 uid="uid://mktqosf47s6q"]
 
 [ext_resource type="Script" path="res://test_script.gd" path="res://test_script.gd" id="1_uhqqe"]
 
 [node name="TestScene" type="Node2D"]
 script = ExtResource("1_uhqqe")
-%%END
