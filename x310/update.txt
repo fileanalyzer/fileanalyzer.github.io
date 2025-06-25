@@ -1,7 +1,11 @@
 project.godot
-GLOBALS/global_variables.gd
-test_scene.tscn
-test_script.gd
+GLOBALS/globalvariables.gd
+Scenes/main_menu.tscn
+Scenes/world2.tscn
+Scenes/player.tscn
+Scenes/world1.tscn
+Scripts/main_menu.gd
+Scripts/player.gd
 %%SPLIT
 ; Engine configuration file.
 ; It's best edited using the editor UI and not directly,
@@ -16,7 +20,7 @@ config_version=5
 [application]
 
 config/name="X310 Tutorial"
-run/main_scene="res://test_scene.tscn"
+run/main_scene="res://Scenes/main_menu.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -25,13 +29,177 @@ config/icon="res://icon.svg"
 GlobalVariables="*res://GLOBALS/global_variables.gd"
 %%SPLIT
 extends Node
-#add more here later
 %%SPLIT
-[gd_scene load_steps=2 format=3 uid="uid://mktqosf47s6q"]
+[gd_scene load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://test_script.gd" path="res://test_script.gd" id="1_uhqqe"]
+[ext_resource type="Script" path="res://Scripts/main_menu.gd" id="1_28flt"]
 
-[node name="TestScene" type="Node2D"]
-script = ExtResource("1_uhqqe")
+[node name="MainMenu" type="Node2D"]
+script = ExtResource("1_28flt")
+
+[node name="Start Game" type="Button" parent="."]
+offset_left = 114.0
+offset_top = 93.0
+offset_right = 340.0
+offset_bottom = 156.0
+theme_override_font_sizes/font_size = 40
+text = "Start Game"
+
+[connection signal="pressed" from="Start Game" to="." method="_on_start_game_pressed"]
+%%SPLIT
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://Scenes/player.tscn" id="1_xms0d"]
+
+[node name="World2" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_xms0d")]
+
+[node name="Label" type="Label" parent="."]
+offset_left = 971.0
+offset_top = 567.0
+offset_right = 1120.0
+offset_bottom = 622.0
+theme_override_font_sizes/font_size = 40
+text = "World 2"
+%%SPLIT
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/player.gd" id="1_v0iea"]
+
+[node name="Player" type="Node2D"]
+script = ExtResource("1_v0iea")
+
+[node name="Label" type="Label" parent="."]
+offset_right = 635.0
+offset_bottom = 333.0
+theme_override_font_sizes/font_size = 40
+
+[node name="Button" type="Button" parent="."]
+offset_left = 669.0
+offset_top = 8.0
+offset_right = 1036.0
+offset_bottom = 73.0
+theme_override_font_sizes/font_size = 40
+text = "Reduce Health"
+
+[node name="Button2" type="Button" parent="."]
+offset_left = 669.0
+offset_top = 248.0
+offset_right = 1036.0
+offset_bottom = 313.0
+theme_override_font_sizes/font_size = 40
+text = "Remove Sword"
+
+[node name="Button3" type="Button" parent="."]
+offset_left = 669.0
+offset_top = 163.0
+offset_right = 1036.0
+offset_bottom = 228.0
+theme_override_font_sizes/font_size = 40
+text = "Add Sunglasses"
+
+[node name="Button4" type="Button" parent="."]
+offset_left = 669.0
+offset_top = 84.0
+offset_right = 1036.0
+offset_bottom = 149.0
+theme_override_font_sizes/font_size = 40
+text = "Increase Stamina"
+
+[node name="Next Level" type="Button" parent="."]
+offset_left = 669.0
+offset_top = 333.0
+offset_right = 1036.0
+offset_bottom = 398.0
+theme_override_font_sizes/font_size = 40
+text = "Next Level"
+
+[node name="Restart Game" type="Button" parent="."]
+offset_left = 669.0
+offset_top = 419.0
+offset_right = 1036.0
+offset_bottom = 484.0
+theme_override_font_sizes/font_size = 40
+text = "Restart Game"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="Button3" to="." method="_on_button_3_pressed"]
+[connection signal="pressed" from="Button4" to="." method="_on_button_4_pressed"]
+[connection signal="pressed" from="Next Level" to="." method="_on_next_level_pressed"]
+[connection signal="pressed" from="Restart Game" to="." method="_on_restart_game_pressed"]
+%%SPLIT
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://Scenes/player.tscn" id="1_a02cp"]
+
+[node name="World1" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_a02cp")]
+
+[node name="Label" type="Label" parent="."]
+offset_left = 971.0
+offset_top = 567.0
+offset_right = 1120.0
+offset_bottom = 622.0
+theme_override_font_sizes/font_size = 40
+text = "World 1"
 %%SPLIT
 extends Node2D
+
+signal start_game
+
+
+
+func _on_start_game_pressed() -> void:
+	start_game.emit()
+%%SPLIT
+extends Node2D
+
+signal next_level
+signal restart_game
+
+var attributes = {
+	"Health": 20,
+	"Speed": 100,
+	"Stamina": 100
+	}
+var inventory = [
+	"Sword",
+	"Water Bottle",
+	"Rusty Key"
+]
+
+func _physics_process(delta: float) -> void:
+	var sta = "Attributes: \n"
+	for i in attributes.keys():
+		sta += "    " + i + " : " + str(attributes[i]) + "\n"
+	sta += "\nInventory: \n"
+	for i in inventory:
+		sta += "    " + i + "\n"
+	$Label.text = sta
+
+
+func _on_button_pressed() -> void:
+	attributes["Health"] -= 1
+
+
+func _on_button_4_pressed() -> void:
+	attributes["Stamina"] += 2
+
+
+func _on_button_3_pressed() -> void:
+	inventory.append("Sunglasses")
+
+
+func _on_button_2_pressed() -> void:
+	inventory.erase("Sword")
+
+
+func _on_next_level_pressed() -> void:
+	next_level.emit()
+
+
+func _on_restart_game_pressed() -> void:
+	restart_game.emit()
